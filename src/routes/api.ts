@@ -1,46 +1,35 @@
-import { Prisma, PrismaClient } from "@prisma/client";
 import express from "express";
-import protobuf from "protobufjs";
-import path from "path";
 import md5 from "md5";
 import protobufroot from "../protobufroot";
+import PhenopacketModel from "../model/phenopacket";
 
-const prisma = new PrismaClient();
 var router = express.Router();
 
-// app.get("/api/phenopacket", async (req, res) => {
-//   const { query, skip, take, orderBy } = req.query;
-//   const where = query
-//     ? {
-//         OR: [{ hash: { contains: query as string } }],
-//       }
-//     : {};
-//   const rows = await prisma.phenoPacket.findMany({
-//     take: Number(take) || undefined,
-//     skip: Number(skip) || undefined,
-//     where,
-//     orderBy: {
-//       updatedAt: orderBy as Prisma.SortOrder,
-//     },
-//   });
-//   res.json(rows);
-// });
-
-router.get("/phenopacket/:hash", async (req, res) => {
-  const { hash }: { hash?: string } = req.params;
-  try {
-    const row = await prisma.phenopacket.findUniqueOrThrow({
-      where: { hash },
-    });
-    return res.json(row);
-  } catch (error) {
-    if (error instanceof Prisma.NotFoundError) {
-      return res.status(404).send("Not found");
-    } else {
+router.get("/phenopacket", async (req, res) => {
+  const { hash: _hash }: { hash?: string } = req.query;
+  if (_hash) {
+    try {
+      const entity = await PhenopacketModel.find({ _hash });
+      if (!entity) return res.status(404).send("Not found");
+      return res.json(entity);
+    } catch (error) {
       console.error(error);
+      return res.status(500);
     }
   }
-  return res.status(500);
+  return res.status(400).send("Bad query");
+});
+
+router.get("/phenopacket/:id", async (req, res) => {
+  const { id }: { id?: string } = req.params;
+  try {
+    const entity = await PhenopacketModel.findById(id);
+    if (!entity) return res.status(404).send("Not found");
+    return res.json(entity);
+  } catch (error) {
+    console.error(error);
+    return res.status(500);
+  }
 });
 
 router.post("/phenopacket", async (req, res) => {
@@ -53,23 +42,16 @@ router.post("/phenopacket", async (req, res) => {
   if (packetError) {
     return res.status(400).json({ message: packetError });
   }
-  const hash = md5(dto);
+  const _hash = md5(dto);
 
-  const entity = await prisma.phenopacket.create({
-    data: { data: dto, hash },
-  });
-  res.status(201).json(entity);
-});
-
-router.put("/phenopacket/:hash", async (req, res) => {
-  const { body } = req;
-  const { hash }: { hash?: string } = req.params;
-  const response = await prisma.phenopacket.upsert({
-    where: { hash },
-    create: { data: body, hash },
-    update: body,
-  });
-  res.json(response);
+  try {
+    const entity = new PhenopacketModel({ ...dto, _hash });
+    await entity.save();
+    return res.status(201).json(entity);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).send("Internal error");
+  }
 });
 
 export default router;

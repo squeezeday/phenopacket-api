@@ -28,6 +28,26 @@ module.exports = {
       swagger: '2.0',
       paths: {
         '/api/v1/phenopacket': {
+          get: {
+            responses: {
+              200: {
+                schema: {
+                  "$ref": "#/definitions/org.phenopackets.schema.v2.Phenopacket"
+                },
+              },
+            },
+            parameters: [
+              {
+                "name": "hash",
+                "in": "query",
+                "description": "ID of phenopacket to return",
+                "required": true,
+                "schema": {
+                  "type": "string",
+                }
+              }
+            ],
+          },
           post: {
             requestBody: {
               description: "Phenopacket", 
@@ -54,7 +74,7 @@ module.exports = {
             },
           },
         },
-        '/api/v1/phenopacket/{hash}': {
+        '/api/v1/phenopacket/{id}': {
           get: {
             responses: {
               200: {
@@ -65,49 +85,12 @@ module.exports = {
             },
             parameters: [
               {
-                "name": "hash",
+                "name": "id",
                 "in": "path",
                 "description": "ID of phenopacket to return",
                 "required": true,
                 "schema": {
                   "type": "string",
-                }
-              }
-            ],
-          },
-          put: {
-            requestBody: {
-              "content": {
-                "application/json": {
-                  schema: {
-                    "$ref": "#/definitions/org.phenopackets.schema.v2.Phenopacket"
-                  }
-                }
-              }
-            },
-            responses: {
-              200: {
-                schema: {
-                  "$ref": "#/definitions/org.phenopackets.schema.v2.Phenopacket"
-                },
-              },
-            },
-            parameters: [
-              {
-                "name": "hash",
-                "in": "path",
-                "description": "ID of phenopacket to update",
-                "required": true,
-                "schema": {
-                  "type": "string",
-                }
-              },
-              {
-                in: "body",
-                name: "body",
-                description: "phenopacket",
-                schema: {
-                  "$ref": "#/definitions/org.phenopackets.schema.v2.Phenopacket"
                 }
               }
             ],
