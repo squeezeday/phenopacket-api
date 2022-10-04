@@ -16,6 +16,7 @@ services:
     environment:
       NODE_ENV: ${NODE_ENV:-production}
       DATABASE_URL: ${DATABASE_URL}
+      ALLOWED_ORIGIN: ${ALLOWED_ORIGIN}
     command: 'nodemon dist/index.js'
 
 volumes:

@@ -3,13 +3,20 @@ import api from "./routes/api";
 import mongoose from "mongoose";
 import * as dotenv from "dotenv";
 import { Server } from "http";
+import cors from "cors";
 
 dotenv.config();
 
 const app = express();
 const swaggerUi = require("swagger-ui-express");
 
-app.use(express.json());
+app.use(express.json({ limit: "100mb" }));
+app.use(express.urlencoded());
+app.use(
+  cors({
+    origin: process.env.ALLOWED_ORIGIN,
+  })
+);
 
 const swaggerSpec = require("../apischema.json");
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));

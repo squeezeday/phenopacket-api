@@ -1,6 +1,6 @@
 # Phenopacket API
 
-Express + Typescript + MongoDB stack for building a phenopackets API.
+Express + Typescript + MongoDB stack for storing Phenopackets.
 
 ## Getting started
 
