@@ -4,6 +4,24 @@ Express + Typescript + MongoDB stack for storing Phenopackets.
 
 ## Getting started
 
+.env settings
+
+- DATABASE_URL="mongodb://localhost:27017/mongodb"
+
+  URI to mongodb
+
+- PORT="3000"
+
+  Listen port
+
+- ALLOWED_ORIGIN="http://localhost:5173"
+
+  CORS allowed origin - frontend URI
+
+- API_URL="http://localhost:3000"
+
+  This API's URI (required for image uploads to work)
+
 ### Using Docker
 
 1. `docker compose up -d`
