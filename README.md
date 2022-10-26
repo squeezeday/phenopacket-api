@@ -22,19 +22,17 @@ Express + Typescript + MongoDB stack for storing Phenopackets.
 
   This API's URI (required for image uploads to work)
 
-### Using Docker
+### Using Docker (production mode)
+
+1. `docker compose -f docker-compose.yml up -d`
+1. Should be available on http://localhost:3000
+
+### Using Docker (development mode)
 
 1. `docker compose up -d`
 1. Should be available on http://localhost:3000
 
-### Local node js
-
-1. `npm install`
-1. `npm run build`
-1. `npm start`
-1. Should be available on http://localhost:3000
-
-#### Development mode
+#### Local development mode
 
 1. `npm install`
 1. `npm run dev`
