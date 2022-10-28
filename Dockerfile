@@ -13,10 +13,13 @@ FROM node:16-alpine as production-stage
 WORKDIR /app
 COPY package*.json ./
 COPY tsconfig.json ./
+COPY apischema.json ./
 # RUN npm ci --only=production
 RUN npm install
-COPY --from=build-stage /usr/src/app/dist/ ./
-COPY ./phenopacket-schema ./
+COPY --from=build-stage /usr/src/app/dist ./dist
+COPY ./phenopacket-schema ./phenopacket-schema
 
 USER node
 EXPOSE 3000
+
+CMD npm start
