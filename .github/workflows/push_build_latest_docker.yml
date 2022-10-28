@@ -16,7 +16,6 @@ jobs:
       with:
         submodules: 'recursive'
 
-
     - name: Publish main image (Dockerfile) to Registry
       uses: elgohr/Publish-Docker-Github-Action@v4
       with:
