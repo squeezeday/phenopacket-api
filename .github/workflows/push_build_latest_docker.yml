@@ -1,9 +1,9 @@
 name: Publish to Docker Hub
 
 on:
- release:
-  types:
-   - created
+  pull_request:
+    branches:
+      - main
 
 jobs:
  docker-image-CI:
@@ -16,10 +16,11 @@ jobs:
       with:
         submodules: 'recursive'
 
+
     - name: Publish main image (Dockerfile) to Registry
       uses: elgohr/Publish-Docker-Github-Action@v4
       with:
         name: danielknilsson/phenopacket-api
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
-        tags: "latest,${{ github.event.release.tag_name }}"
+        tags: "latest, ${{steps.branch-name.outputs.current_branch}}"
