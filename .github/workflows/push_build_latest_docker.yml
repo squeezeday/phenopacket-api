@@ -20,4 +20,4 @@ jobs:
         name: danielknilsson/phenopacket-api
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
-        tags: "latest,${{ github.event.release.tag_name }}"
+        tags: "latest, ${{steps.branch-name.outputs.current_branch}}"
