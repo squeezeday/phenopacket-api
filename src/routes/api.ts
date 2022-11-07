@@ -5,6 +5,7 @@ import protobufroot from "../protobufroot";
 import PhenopacketModel from "../model/phenopacket";
 import FileModel from "../model/file";
 import mongoose from "mongoose";
+import FormDataModel from "../model/formdata";
 
 var router = express.Router();
 const upload = multer({ storage: multer.memoryStorage() });
@@ -50,6 +51,19 @@ router.post("/phenopacket", async (req, res) => {
   try {
     const _hash = md5(dto);
     const entity = new PhenopacketModel({ ...dto, _hash });
+    await entity.save();
+    return res.status(201).json(entity);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).send("Internal error");
+  }
+});
+
+router.post("/formdata", async (req, res) => {
+  const dto = req.body;
+
+  try {
+    const entity = new FormDataModel({ ...dto });
     await entity.save();
     return res.status(201).json(entity);
   } catch (error) {

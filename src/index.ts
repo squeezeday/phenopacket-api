@@ -11,7 +11,7 @@ const app = express();
 const swaggerUi = require("swagger-ui-express");
 
 app.use(express.json({ limit: "100mb" }));
-app.use(express.urlencoded());
+app.use(express.urlencoded({ extended: true }));
 app.use(
   cors({
     origin: process.env.ALLOWED_ORIGIN,
