@@ -1,11 +1,10 @@
 import express from "express";
-import md5 from "md5";
 import multer from "multer";
 import protobufroot from "../protobufroot";
 import PhenopacketModel from "../model/phenopacket";
 import FileModel from "../model/file";
-import mongoose from "mongoose";
 import FormDataModel from "../model/formdata";
+import hash from "object-hash";
 
 var router = express.Router();
 const upload = multer({ storage: multer.memoryStorage() });
@@ -49,7 +48,7 @@ router.post("/phenopacket", async (req, res) => {
   }
 
   try {
-    const _hash = md5(dto);
+    const _hash = hash(dto, { algorithm: "md5" });
     const entity = new PhenopacketModel({ ...dto, _hash });
     await entity.save();
     return res.status(201).json(entity);
