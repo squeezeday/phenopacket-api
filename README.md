@@ -43,3 +43,14 @@ Express + Typescript + MongoDB stack for storing Phenopackets.
 `npm install -g protobuf2swagger`
 
 `protobuf2swagger`
+
+## Version history
+
+### 1.0.0
+
+- Initial release
+
+### 1.1.0
+
+- Generate password for customformdata
+- Backend status

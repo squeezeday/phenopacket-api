@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 const schema = new mongoose.Schema(
-  {},
+  { password: String },
   {
     strict: false,
     id: true,

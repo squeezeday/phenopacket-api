@@ -23,7 +23,11 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 app.get("/status", async (req, res) => {
   const { readyState } = mongoose.connection;
-  res.send({ readyState });
+  res.status(readyState === 1 ? 200 : 500).send({
+    status: readyState === 1 ? "OK" : "",
+    version: "1.1.0",
+    readyState,
+  });
 });
 app.use("/api/v1", api);
 
