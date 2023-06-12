@@ -1,6 +1,6 @@
 {
   "name": "phenopacket-api",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -31,6 +31,7 @@
     "cors": "^2.8.5",
     "dotenv": "^16.0.2",
     "express": "^4.18.1",
+    "generate-password-ts": "^1.6.3",
     "md5": "^2.3.0",
     "mongodb": "^4.9.1",
     "mongoose": "^6.5.4",
